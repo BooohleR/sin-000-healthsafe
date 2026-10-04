@@ -53,4 +53,16 @@ class WardDataNormalizerTest {
         assertEquals("East Wing", actual);
     }
 
+    @Test
+    void shouldRemoveExtraSpacesInsideWing() {
+        // Arrange
+        String dirtyWing = "South  Wing";
+
+        // Act
+        String actual = WardDataNormalizer.normalizeWing(dirtyWing);
+
+        // Assert
+        assertEquals("South Wing", actual);
+    }
+
 }
