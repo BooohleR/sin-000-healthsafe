@@ -17,4 +17,16 @@ class WardDataNormalizerTest {
         assertEquals("W-02", actual);
 
     }
+    @Test
+    void shouldRemoveWhitespaceFromWardId() {
+
+        // Arrange
+        String dirtyWardId = " W-03 ";
+
+        // Act
+        String actual = WardDataNormalizer.normalizeWardId(dirtyWardId);
+
+        // Assert
+        assertEquals("W-03",actual);
+    }
 }
