@@ -40,4 +40,17 @@ class WardDataNormalizerTest {
         assertEquals("East Wing", actual);
 
     }
+
+    @Test
+    void shouldRemoveWhitespaceFromWing() {
+        // Arrange
+        String dirtyWing = " East Wing ";
+
+        // Act
+        String actual = WardDataNormalizer.normalizeWing(dirtyWing);
+
+        // Assert
+        assertEquals("East Wing", actual);
+    }
+
 }
