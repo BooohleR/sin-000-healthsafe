@@ -29,4 +29,15 @@ class WardDataNormalizerTest {
         // Assert
         assertEquals("W-03",actual);
     }
+
+    @Test
+    void shouldNormalizeWingCasing() {
+
+        String dirtyWing = "east wing";
+
+        String actual = WardDataNormalizer.normalizeWing(dirtyWing);
+
+        assertEquals("East Wing", actual);
+
+    }
 }
