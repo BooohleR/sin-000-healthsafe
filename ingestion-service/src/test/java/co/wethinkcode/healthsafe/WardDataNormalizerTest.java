@@ -65,4 +65,24 @@ class WardDataNormalizerTest {
         assertEquals("South Wing", actual);
     }
 
+    @Test
+    void shouldNormalizeDepartmentCasing() {
+
+        String dirtyDep = "cardiology";
+
+        String actual = WardDataNormalizer.normalizeDepartment(dirtyDep);
+
+        assertEquals("Cardiology", actual);
+    }
+
+    @Test
+    void shouldNormalizeUppercaseDepartmentCasing() {
+
+        String dirtyDep = "PAEDIATRICS";
+
+        String actual = WardDataNormalizer.normalizeDepartment(dirtyDep);
+
+        assertEquals("Paediatrics", actual);
+    }
+
 }

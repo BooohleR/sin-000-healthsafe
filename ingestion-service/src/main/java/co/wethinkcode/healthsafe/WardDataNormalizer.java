@@ -21,4 +21,12 @@ public class WardDataNormalizer {
         return firstWord + " " + secWord;
     }
 
+    public static String normalizeDepartment( String dirtyDep){
+        String[] words = dirtyDep.split("\\s+");
+
+        String firstWord= words[0].substring(0,1).toUpperCase() + words[0].substring(1).toLowerCase();
+
+        return firstWord;
+    }
+
 }
