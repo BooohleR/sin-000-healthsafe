@@ -1,6 +1,7 @@
 package co.wethinkcode.healthsafe;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class WardDataNormalizerTest {
 
@@ -109,6 +110,24 @@ class WardDataNormalizerTest {
         Integer actual = WardDataNormalizer.normalizeBedsAvailable(dirtyBeds);
 
         assertEquals(null, actual);
+    }
+
+    @Test
+    void shouldReturnNullForNegativeBeds() {
+        String dirtyBeds = "-1";
+
+        Integer actual = WardDataNormalizer.normalizeBedsAvailable(dirtyBeds);
+
+        assertNull(actual);
+    }
+
+    @Test
+    void shouldRemoveWhitespaceFromBeds() {
+        String dirtyBeds = " 3 ";
+
+        Integer actual = WardDataNormalizer.normalizeBedsAvailable(dirtyBeds);
+
+        assertEquals(3, actual);
     }
 
 }
