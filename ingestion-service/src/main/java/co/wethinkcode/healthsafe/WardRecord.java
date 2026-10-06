@@ -18,5 +18,23 @@ public class WardRecord {
         this.notes = notes;
     }
 
+    public String getWardId() {
+        return wardId;
+    }
 
- }
+    public String getWing() {
+        return wing;
+    }
+
+    public Integer getBedsAvailable() {
+        return bedsAvailable;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+}
