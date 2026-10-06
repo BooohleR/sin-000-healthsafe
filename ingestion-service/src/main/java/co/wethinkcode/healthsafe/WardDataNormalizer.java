@@ -47,4 +47,19 @@ public class WardDataNormalizer {
             return null;
         }
     }
+    public static WardRecord normalizeWard(
+            String dirtyWardId,
+            String dirtyWing,
+            String dirtyDepartment,
+            String dirtyBeds) {
+
+        String wardId = normalizeWardId(dirtyWardId);
+        String wing = normalizeWing(dirtyWing);
+        String department = normalizeDepartment(dirtyDepartment);
+        Integer bedsAvailable = normalizeBedsAvailable(dirtyBeds);
+
+        String notes = "";
+
+        return new WardRecord(wardId, wing, department, bedsAvailable, notes);
+    }
 }

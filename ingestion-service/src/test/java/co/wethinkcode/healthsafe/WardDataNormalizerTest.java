@@ -129,5 +129,19 @@ class WardDataNormalizerTest {
 
         assertEquals(3, actual);
     }
+    @Test
+    void shouldNormalizeCompleteWardRecord() {
+        WardRecord ward = WardDataNormalizer.normalizeWard(
+                "w-05",
+                "east wing ",
+                "PAEDIATRICS",
+                "five"
+        );
+
+        assertEquals("W-05", ward.getWardId());
+        assertEquals("East Wing", ward.getWing());
+        assertEquals("Paediatrics", ward.getDepartment());
+        assertNull(ward.getBedsAvailable());
+    }
 
 }
