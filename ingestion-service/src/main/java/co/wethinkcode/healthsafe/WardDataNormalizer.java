@@ -26,7 +26,19 @@ public class WardDataNormalizer {
 
         String firstWord= words[0].substring(0,1).toUpperCase() + words[0].substring(1).toLowerCase();
 
+        if(firstWord.equals ("Pediatrics")){
+            return "Paediatrics";
+        }
+
         return firstWord;
+    }
+
+    public static Integer normalizeBedsAvailable(String dirtyBeds) {
+        try {
+            return Integer.parseInt(dirtyBeds);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
 }

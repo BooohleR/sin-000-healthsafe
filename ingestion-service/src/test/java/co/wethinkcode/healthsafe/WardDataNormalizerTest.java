@@ -83,6 +83,32 @@ class WardDataNormalizerTest {
         String actual = WardDataNormalizer.normalizeDepartment(dirtyDep);
 
         assertEquals("Paediatrics", actual);
+
+    } @Test
+    void shouldNormalizePediatricsSpelling() {
+        String dirtyDep = "Pediatrics";
+
+        String actual = WardDataNormalizer.normalizeDepartment(dirtyDep);
+
+        assertEquals("Paediatrics", actual);
+    }
+
+    @Test
+    void shouldConvertValidBedsToInteger() {
+        String dirtyBeds = "3";
+
+        Integer actual = WardDataNormalizer.normalizeBedsAvailable(dirtyBeds);
+
+        assertEquals(3, actual);
+    }
+
+    @Test
+    void shouldReturnNullForMissingBeds() {
+        String dirtyBeds = "N/A";
+
+        Integer actual = WardDataNormalizer.normalizeBedsAvailable(dirtyBeds);
+
+        assertEquals(null, actual);
     }
 
 }
