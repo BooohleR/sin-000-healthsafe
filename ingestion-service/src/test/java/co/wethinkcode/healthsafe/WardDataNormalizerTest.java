@@ -148,4 +148,20 @@ class WardDataNormalizerTest {
         );
     }
 
+    @Test
+    void shouldFlagNegativeBedsInWardRecord() {
+        WardRecord ward = WardDataNormalizer.normalizeWard(
+                "W-04",
+                "North Wing",
+                "Oncology",
+                "-1"
+        );
+
+        assertNull(ward.getBedsAvailable());
+        assertEquals(
+                "bedsAvailable was negative ('-1') — flagged for follow-up",
+                ward.getNotes()
+        );
+    }
+
 }
