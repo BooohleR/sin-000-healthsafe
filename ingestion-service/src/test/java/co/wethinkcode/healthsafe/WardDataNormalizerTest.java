@@ -162,6 +162,16 @@ class WardDataNormalizerTest {
                 "bedsAvailable was negative ('-1') — flagged for follow-up",
                 ward.getNotes()
         );
+
+    }
+
+    @Test
+    void shouldReturnNullForMissingWing() {
+        String dirtyWing = "";
+
+        String actual = WardDataNormalizer.normalizeWing(dirtyWing);
+
+        assertNull(actual);
     }
 
 }

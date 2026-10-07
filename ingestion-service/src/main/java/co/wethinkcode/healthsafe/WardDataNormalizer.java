@@ -10,6 +10,10 @@ public class WardDataNormalizer {
 
     public static String normalizeWing(String dirtyWing) {
 
+        if (dirtyWing.trim().isEmpty()) {
+            return null;
+        }
+
         String[] words = dirtyWing.trim().split("\\s+");
 
         String firstWord = words[0].substring(0, 1).toUpperCase()

@@ -11,8 +11,28 @@ public class WardCsvReader {
     public List<WardRecord> read(String filePath) throws Exception {
 
         List<WardRecord> wards = new ArrayList<>();
-        return wards;
 
+        CSVReader csvReader = new CSVReader(new FileReader(filePath));
+
+        String[] row;
+
+        csvReader.readNext();
+
+        while ((row = csvReader.readNext()) != null) {
+
+            WardRecord ward = WardDataNormalizer.normalizeWard(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3]
+            );
+
+            wards.add(ward);
+        }
+
+        csvReader.close();
+
+        return wards;
     }
 
 }
