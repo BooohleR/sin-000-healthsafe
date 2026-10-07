@@ -142,6 +142,10 @@ class WardDataNormalizerTest {
         assertEquals("East Wing", ward.getWing());
         assertEquals("Paediatrics", ward.getDepartment());
         assertNull(ward.getBedsAvailable());
+        assertEquals(
+                "bedsAvailable was non-numeric ('five') — flagged for follow-up",
+                ward.getNotes()
+        );
     }
 
 }

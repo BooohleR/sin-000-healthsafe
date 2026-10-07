@@ -60,6 +60,10 @@ public class WardDataNormalizer {
 
         String notes = "";
 
+        if (bedsAvailable == null) {
+            notes = "bedsAvailable was non-numeric ('" + dirtyBeds + "') — flagged for follow-up";
+        }
+
         return new WardRecord(wardId, wing, department, bedsAvailable, notes);
     }
 }

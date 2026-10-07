@@ -16,6 +16,8 @@ public class WardRecord {
         this.department = department;
         this.bedsAvailable = bedsAvailable;
         this.notes = notes;
+
+
     }
 
     public String getWardId() {
