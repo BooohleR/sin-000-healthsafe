@@ -64,6 +64,10 @@ public class WardDataNormalizer {
 
         String notes = "";
 
+        if (wing == null) {
+            notes = "wing was missing — flagged for follow-up";
+        }
+
         if (dirtyBeds.trim().startsWith("-")) {
             notes = "bedsAvailable was negative ('" + dirtyBeds.trim() + "') — flagged for follow-up";
         } else if (bedsAvailable == null) {

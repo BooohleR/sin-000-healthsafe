@@ -173,5 +173,21 @@ class WardDataNormalizerTest {
 
         assertNull(actual);
     }
+    @Test
+    void shouldFlagMissingWing() {
+        WardRecord ward = WardDataNormalizer.normalizeWard(
+                "W-08",
+                "",
+                "Oncology",
+                "4"
+        );
+
+        assertNull(ward.getWing());
+
+        assertEquals(
+                "wing was missing — flagged for follow-up",
+                ward.getNotes()
+        );
+    }
 
 }
