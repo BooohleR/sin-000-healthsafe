@@ -189,5 +189,23 @@ class WardDataNormalizerTest {
                 ward.getNotes()
         );
     }
+    @Test
+    void shouldRecordMultipleValidationNotes() {
+        WardRecord ward = WardDataNormalizer.normalizeWard(
+                "W-20",
+                "",
+                "Oncology",
+                "five"
+        );
+
+        assertNull(ward.getWing());
+        assertNull(ward.getBedsAvailable());
+
+        assertEquals(
+                "wing was missing — flagged for follow-up; " +
+                        "bedsAvailable was non-numeric ('five') — flagged for follow-up",
+                ward.getNotes()
+        );
+    }
 
 }

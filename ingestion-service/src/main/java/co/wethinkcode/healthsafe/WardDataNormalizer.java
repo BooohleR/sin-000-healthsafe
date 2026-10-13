@@ -1,4 +1,6 @@
 package co.wethinkcode.healthsafe;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WardDataNormalizer {
 
@@ -51,29 +53,50 @@ public class WardDataNormalizer {
             return null;
         }
     }
+
     public static WardRecord normalizeWard(
             String dirtyWardId,
             String dirtyWing,
             String dirtyDepartment,
             String dirtyBeds) {
 
+        // Step 1: Normalize each field
         String wardId = normalizeWardId(dirtyWardId);
         String wing = normalizeWing(dirtyWing);
         String department = normalizeDepartment(dirtyDepartment);
         Integer bedsAvailable = normalizeBedsAvailable(dirtyBeds);
 
-        String notes = "";
+        // Step 2: Create a list to store validation warnings
+        List<String> warnings = new ArrayList<>();
 
+        // Step 3: Check whether the wing is missing
         if (wing == null) {
-            notes = "wing was missing — flagged for follow-up";
+            warnings.add("wing was missing — flagged for follow-up");
         }
 
+        // Step 4: Check whether bedsAvailable is invalid
         if (dirtyBeds.trim().startsWith("-")) {
-            notes = "bedsAvailable was negative ('" + dirtyBeds.trim() + "') — flagged for follow-up";
+            warnings.add(
+                    "bedsAvailable was negative ('" + dirtyBeds.trim()
+                            + "') — flagged for follow-up"
+            );
         } else if (bedsAvailable == null) {
-            notes = "bedsAvailable was non-numeric ('" + dirtyBeds + "') — flagged for follow-up";
+            warnings.add(
+                    "bedsAvailable was non-numeric ('" + dirtyBeds
+                            + "') — flagged for follow-up"
+            );
         }
 
-        return new WardRecord(wardId, wing, department, bedsAvailable, notes);
+        // Step 5: Combine all warnings into one String
+        String notes = String.join("; ", warnings);
+
+        // Step 6: Create and return the cleaned WardRecord
+        return new WardRecord(
+                wardId,
+                wing,
+                department,
+                bedsAvailable,
+                notes
+        );
     }
 }
