@@ -35,6 +35,9 @@ public class WardDataNormalizer {
         if (firstWord.equals("Pediatrics")) {
             return "Paediatrics";
         }
+        if (firstWord.equals("Icu")) {
+            return "ICU";
+        }
 
         return firstWord;
     }

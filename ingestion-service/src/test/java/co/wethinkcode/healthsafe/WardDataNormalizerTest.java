@@ -207,5 +207,12 @@ class WardDataNormalizerTest {
                 ward.getNotes()
         );
     }
+    @Test
+    void shouldPreserveICUAcronym() {
+        assertEquals(
+                "ICU",
+                WardDataNormalizer.normalizeDepartment("icu")
+        );
+    }
 
 }

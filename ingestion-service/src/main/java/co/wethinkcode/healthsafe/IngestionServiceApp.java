@@ -17,7 +17,7 @@ public class IngestionServiceApp {
         WardCsvReader reader = new WardCsvReader();
 
         List<WardRecord> wards =
-                reader.read("src/main/resources/wards-outdated.csv");
+                reader.readFromResources("wards-outdated.csv");
 
         app.get("/health", ctx -> ctx.result("OK"));
 
