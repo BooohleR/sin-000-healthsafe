@@ -83,6 +83,39 @@ public class WardServiceApp {
 
             ctx.json(departments);
         });
+        app.get("/wards/{id}", ctx -> {
+
+            String wardId = ctx.pathParam("id");
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(INGESTION_URL))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(
+                    request,
+                    HttpResponse.BodyHandlers.ofString()
+            );
+
+            if (response.statusCode() != 200) {
+                ctx.status(502).result("Ingestion service unavailable");
+                return;
+            }
+
+            JsonNode wards = mapper.readTree(response.body());
+
+            for (JsonNode ward : wards) {
+
+                if (ward.path("wardId").asText()
+                        .equalsIgnoreCase(wardId)) {
+
+                    ctx.json(ward);
+                    return;
+                }
+            }
+
+            ctx.status(404).result("Ward not found");
+        });
 
         return app;
     }

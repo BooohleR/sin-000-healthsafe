@@ -106,4 +106,61 @@ public class WardServiceTest {
             app.stop();
         }
     }
+    @Test
+    void shouldReturnWardById() throws Exception {
+
+        Javalin app = WardServiceApp.createApp().start(0);
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(
+                            "http://localhost:" + app.port() + "/wards/W-01"
+                    ))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(
+                    request,
+                    HttpResponse.BodyHandlers.ofString()
+            );
+
+            assertEquals(200, response.statusCode());
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode ward = mapper.readTree(response.body());
+
+            assertEquals("W-01", ward.get("wardId").asText());
+
+        } finally {
+            app.stop();
+        }
+    }
+    @Test
+    void shouldReturn404ForUnknownWard() throws Exception {
+
+        Javalin app = WardServiceApp.createApp().start(0);
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(
+                            "http://localhost:" + app.port() + "/wards/W-99"
+                    ))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(
+                    request,
+                    HttpResponse.BodyHandlers.ofString()
+            );
+
+            assertEquals(404, response.statusCode());
+
+        } finally {
+            app.stop();
+        }
+    }
 }
