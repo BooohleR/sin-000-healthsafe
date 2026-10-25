@@ -16,7 +16,20 @@ public class WardServiceApp {
     private static final String INGESTION_URL =
             "http://localhost:7030/wards";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+        StaffingEventSubscriber subscriber = new StaffingEventSubscriber();
+
+        subscriber.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                subscriber.stop();
+            } catch (Exception e) {
+                System.err.println("Error stopping subscriber: " + e.getMessage());
+            }
+        }));
+
         createApp().start(7031);
     }
 

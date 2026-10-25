@@ -96,14 +96,28 @@ public class StaffingServiceApp {
                 status = "CODE BLUE";
             }
 
-            // Step 4: Return the schedule summary
-            ctx.json(Map.of(
+// Step 4: Create staffing summary
+            Map<String, Object> staffingEvent = Map.of(
                     "wardId", ward.path("wardId").asText(),
                     "department", ward.path("department").asText(),
                     "emergencyLevel", level,
                     "doctorsRequired", doctorsRequired,
                     "status", status
-            ));
+            );
+
+// Step 5: Publish staffing update to ActiveMQ
+            String eventJson = mapper.writeValueAsString(staffingEvent);
+
+            try {
+                StaffingEventPublisher.publish(eventJson);
+            } catch (Exception e) {
+                System.err.println("Unable to publish staffing event: " + e.getMessage());
+                ctx.status(503).result("Messaging service unavailable");
+                return;
+            }
+
+// Step 6: Return the staffing summary
+            ctx.json(staffingEvent);
         });
 
         return app;
