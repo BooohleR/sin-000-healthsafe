@@ -130,6 +130,55 @@ public class WardServiceApp {
             ctx.status(404).result("Ward not found");
         });
 
+        // Report an equipment failure and publish it to ActiveMQ
+        app.post("/equipment-failure", ctx -> {
+
+            JsonNode failure;
+
+            try {
+                failure = mapper.readTree(ctx.body());
+            } catch (Exception e) {
+                ctx.status(400).result("Invalid JSON");
+                return;
+            }
+
+            String wardId = failure.path("wardId").asText("").trim();
+            String equipment = failure.path("equipment").asText("").trim();
+            String description = failure.path("description").asText("").trim();
+
+            if (wardId.isEmpty() || equipment.isEmpty() || description.isEmpty()) {
+                ctx.status(400).result(
+                        "wardId, equipment and description are required"
+                );
+                return;
+            }
+
+            String eventJson = mapper.writeValueAsString(
+                    java.util.Map.of(
+                            "wardId", wardId,
+                            "equipment", equipment,
+                            "description", description
+                    )
+            );
+
+            try {
+                EquipmentFailurePublisher.publish(eventJson);
+            } catch (Exception e) {
+                System.err.println(
+                        "Equipment queue unavailable: " + e.getMessage()
+                );
+                ctx.status(503).result("Equipment messaging unavailable");
+                return;
+            }
+
+            ctx.status(202).json(
+                    java.util.Map.of(
+                            "message", "Equipment failure queued",
+                            "wardId", wardId
+                    )
+            );
+        });
+
         return app;
     }
 }
