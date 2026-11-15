@@ -28,8 +28,8 @@ cleanup through synchronous REST calls to asynchronous MQ decoupling and alertin
 Plus [`common/`](common) (no port) — the shared ActiveMQ broker and MQ config notes
 for `staffing-events-topic`: Staffing updates are broadcast as Events via the broker to decouple the frontend from the Staffing Service.
 
-**Status:** scaffold only — build files, Javalin bootstrap, and TODOs are in place; no
-business logic has been implemented yet.
+**Status:** All four stages implemented and demonstrated successfully, including CSV data cleaning, REST API integration, 
+ActiveMQ topic messaging, and equipment failure queue processing.
 
 ## Your task
 
@@ -178,3 +178,40 @@ then add tests under that module's `src/test/java/...` and run:
 ```
 mvn test
 ```
+## My Implementation and Demonstration
+
+I completed all four stages of the HealthSafe Systems Integration project.
+
+### Stage 1 — Data Ingestion
+Implemented CSV cleaning, standardised ward IDs and wing names, handled duplicate records, and flagged invalid or missing values.
+
+### Stage 2 — REST API Integration
+Connected the services using REST APIs so that ward information, emergency levels, and staffing requirements can be retrieved across services.
+
+### Stage 3 — ActiveMQ Topic
+Implemented event publishing in staffing-service and event subscription in ward-service using `staffing-events-topic`.
+
+### Stage 4 — ActiveMQ Queue
+Implemented equipment failure publishing in ward-service and message consumption in equipment-alert-service using `equipment-failure-queue`.
+
+## Challenges and Lessons Learned
+
+One of my biggest challenges was understanding how services depend on each other. I experienced integration test failures when ingestion-service wasn't running, and I learned how important it is to check service availability when debugging.
+
+I also experienced port conflicts when trying to start services that were already running.
+
+Working with Apache ActiveMQ helped me understand the difference between synchronous REST communication and asynchronous messaging. I learned how topics support publish-subscribe communication and how queues allow messages to be processed by consumers.
+
+Overall, this project helped me improve my debugging skills and understand how independently developed services work together.
+
+## Demo Video
+
+My 5–10-minute HealthSafe demonstration video:
+
+**YouTube link:** To be added after recording.
+
+## Systems Integration Verification Code
+
+**Verification code:** To be added from the proof page.
+
+WTC-RT5QQWPT
